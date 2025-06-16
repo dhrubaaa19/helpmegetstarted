@@ -286,7 +286,14 @@
 
   <div class="donation-popup" id="donationPopup"></div>
 
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FC03ZLPYDY"></script>
   <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-FC03ZLPYDY');
+    
     document.getElementById("nativeShareBtn").addEventListener("click", async () => {
       const shareData = {
         title: "Support My Activa Journey",
