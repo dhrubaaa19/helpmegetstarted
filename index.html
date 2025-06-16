@@ -173,6 +173,39 @@
       color: #333;
       margin-top: 1.2rem;
     }
+
+/* Liquid Glass Donation Popup */
+.donation-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 20px;
+  min-width: 280px;
+  max-width: 90%;
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  color: #212121;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease, transform 0.4s ease;
+  z-index: 9999;
+}
+
+/* Optional: Smaller text on mobile */
+@media (max-width: 480px) {
+  .donation-popup {
+    font-size: 0.9rem;
+    padding: 12px 16px;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -187,7 +220,7 @@
   <img src="scooter.png" class="scooter-img" alt="Scooter" />
 </div>
 
-  <p><strong>First ₹70 raised — the wheels are starting to turn</strong></p>
+  <p><strong>First ₹2095 raised — the wheels are starting to turn</strong></p>
 
   <div class="qr-section">
     <img src="qr1.png" alt="QR 1">
@@ -208,7 +241,7 @@
       <img src="payment_success2.png" class="slide" alt="Payment 3" />
       <img src="payment_success3.png" class="slide" alt="Payment 4" />
       <img src="payment_success4.png" class="slide" alt="Payment 5" />
-      <img src="payment_success5.png" class="slide" alt="Payment 6" /> 
+      <img src="payment_success5.png" class="slide" alt="Payment 6" />
       <img src="payment_success6.png" class="slide" alt="Payment 7" />
       <img src="payment_success7.png" class="slide" alt="Payment 8" />
       <img src="payment_success8.png" class="slide" alt="Payment 9" />
@@ -222,6 +255,7 @@
       <img src="payment_success16.png" class="slide" alt="Payment 16" />
       <img src="payment_success17.png" class="slide" alt="Payment 18" />
       <img src="payment_success18.png" class="slide" alt="Payment 19" />
+      <img src="payment_success19.png" class="slide" alt="Payment 20" />
       
     </div>
   </div>
@@ -233,6 +267,8 @@
   </button>
 
   <p class="footer-text"><strong>Your support or share means everything ❤️</strong></p>
+
+  <div class="donation-popup" id="donationPopup"></div>
 
   <script>
     document.getElementById("nativeShareBtn").addEventListener("click", async () => {
@@ -268,6 +304,63 @@ const track = document.getElementById("carouselTrack");
     index = (index + 1) % slides.length;
     track.style.transform = `translateX(-${index * 100}%)`;
   }, 1500);
+
+// Sample supporter messages
+const supporters = [
+    "Aarav Sharma — Thank you for the ₹120 ❤️",
+    "Ananya Iyer — Truly grateful for the ₹95 ❤️",
+    "Kabir Joshi — Big thanks for the ₹50 ❤️",
+    "Meera Dasgupta — Appreciate your ₹75 support ❤️",
+    "Vivaan Reddy — Thanks for pitching in ₹110 ❤️",
+    "Saanvi Patel — Heartfelt thanks for ₹60 ❤️",
+    "Siddharth Chatterjee — Grateful for the ₹145 boost ❤️",
+    "Kavya Menon — Thank you for the ₹80 kindness ❤️",
+    "Ishan Deshmukh — Many thanks for ₹135 ❤️",
+    "Diya Kulkarni — Thanks for the ₹40 contribution ❤️",
+    "Rohan Malhotra — Appreciate the ₹125 support ❤️",
+    "Priya Bansal — Thanks a bunch for ₹70 ❤️",
+    "Arjun Nair — Thank you for dropping ₹100 ❤️",
+    "Rhea Sengupta — Big cheers for the ₹55 ❤️",
+    "Devansh Mehta — Grateful for your ₹150 push ❤️",
+    "Nandini Rao — Many thanks for ₹90 ❤️",
+    "Kunal Bhattacharya — Truly appreciate the ₹130 ❤️",
+    "Aanya Jain — Thanks for the ₹65 love ❤️",
+    "Rajat Verma — Cheers for the ₹115 support ❤️",
+    "Ishita Pillai — Thank you for your ₹85 gift ❤️"
+  ];
+
+let lastSupporterIndex = -1;
+
+// Display a random supporter message in the popup
+function showRandomSupporter() {
+  const popup = document.getElementById('donationPopup');
+  
+  let newIndex;
+  do {
+    newIndex = Math.floor(Math.random() * supporters.length);
+  } while (newIndex === lastSupporterIndex);
+  lastSupporterIndex = newIndex;
+
+  popup.textContent = supporters[newIndex];
+  popup.style.opacity = '1';
+  popup.style.transform = 'translate(-50%, 0)';
+  popup.style.pointerEvents = 'auto';
+
+  // Hide after 5 seconds
+  setTimeout(() => {
+    popup.style.opacity = '0';
+    popup.style.transform = 'translate(-50%, 10px)';
+    popup.style.pointerEvents = 'none';
+  }, 5000);
+}
+
+// Initialize on page load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    showRandomSupporter(); // Initial display
+    setInterval(showRandomSupporter, 10000); // Repeat every 10s
+  }, 10000); // First popup delay
+});
   </script>
 
 </body>
